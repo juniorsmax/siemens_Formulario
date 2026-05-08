@@ -156,6 +156,7 @@
     footer a:hover { color: #fff; }
     footer h6 { color: #fff; font-weight: 700; margin-bottom: 14px; }
   </style>
+<link rel="stylesheet" href="form-wizard.css" />
 </head>
 <body>
 
@@ -263,68 +264,22 @@
   </div>
 </section>
 
-<section id="contacto" style="padding:80px 0; background: var(--light-bg);">
+<section id="contacto" style="padding:80px 0;background:var(--light-bg);">
   <div class="container">
     <div class="text-center mb-5">
-      <div class="section-label">Contacto rápido</div>
-      <h2 class="section-title">Solicita tu reparación de Siemens</h2>
-      <p class="section-subtitle">Rellena el formulario y te contactamos en menos de 1 hora para confirmar la visita. Sin compromiso.</p>
+      <div class="section-label">Solicitud de reparación</div>
+      <h2 class="section-title">Solicita la reparación hoy</h2>
+      <p class="section-subtitle">Completa el formulario en 6 pasos y un técnico te contactará en menos de 1 hora.</p>
       <div class="section-divider"></div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-lg-7">
-        <div class="form-card">
-          <form id="contactForm">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label">Nombre completo *</label>
-                <input type="text" name="nombre" class="form-control" placeholder="Tu nombre" required />
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Teléfono *</label>
-                <input type="tel" name="telefono" class="form-control" placeholder="612 345 678" required />
-              </div>
-              <div class="col-12">
-                <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="tucorreo@ejemplo.com" />
-              </div>
-              <div class="col-12">
-                <label class="form-label">Electrodoméstico Siemens *</label>
-                <select name="electrodomestico" class="form-select" required>
-                  <option value="">Selecciona el electrodoméstico</option>
-                  <option>Lavadora Siemens</option>
-                  <option>Secadora Siemens</option>
-                  <option>Horno Siemens</option>
-                  <option>Lavavajillas Siemens</option>
-                  <option>Frigorífico Siemens</option>
-                  <option>Campana extractora Siemens</option>
-                  <option>Vitrocerámica / Inducción Siemens</option>
-                  <option>Termo eléctrico Siemens</option>
-                  <option>Otro electrodoméstico Siemens</option>
-                </select>
-              </div>
-              <div class="col-12">
-                <label class="form-label">Describe la avería *</label>
-                <textarea name="descripcion" class="form-control" rows="4" placeholder="Explícanos qué le pasa a tu electrodoméstico Siemens..." required></textarea>
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn-submit" id="submitBtn">
-                  <i class="bi bi-send-fill"></i> Enviar solicitud de reparación
-                </button>
-                <p style="font-size:0.78rem;color:var(--text-muted);margin-top:10px;text-align:center;">
-                  <i class="bi bi-shield-lock me-1"></i>Tus datos están protegidos. No los compartimos con terceros.
-                </p>
-              </div>
-            </div>
-          </form>
-          <div id="formSuccess" style="display:none;text-align:center;padding:30px;">
-            <i class="bi bi-check-circle-fill" style="font-size:3rem;color:#16a34a;"></i>
-            <h3 style="margin-top:16px;color:#16a34a;">¡Solicitud enviada con éxito!</h3>
-            <p style="color:var(--text-muted);">Hemos recibido tu solicitud. Te contactaremos en menos de 1 hora para confirmar la visita.</p>
+      <div class="col-lg-7 col-xl-6">
+        <div class="wizard-card" data-marca="Siemens" data-electrodomestico="">
+          <div class="wizard-hdr">
+            <b>A solo 6 pasos de enviar tu solicitud</b>
+            <small>Llena el formulario y un técnico te contactará</small>
           </div>
-          <div id="formError" style="display:none;padding:20px;background:#FEF2F2;border-radius:10px;margin-top:16px;">
-            <p style="color:#DC2626;margin:0;text-align:center;"><i class="bi bi-exclamation-circle me-2"></i>Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.</p>
-          </div>
+          <div class="wizard-body" id="wizardBody"></div>
         </div>
       </div>
     </div>
@@ -429,29 +384,10 @@
 <!-- Obtén tus IDs en https://dashboard.emailjs.com              -->
 <!-- ============================================================ -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script src="form-wizard.js"></script>
 <script>
-  (function(){ emailjs.init({ publicKey: "YOUR_EMAILJS_PUBLIC_KEY" }); })();
-
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    var btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
-
-    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
-      .then(function() {
-        document.getElementById('contactForm').style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
-      }, function() {
-        document.getElementById('formError').style.display = 'block';
-        btn.disabled = false;
-        btn.innerHTML = '<i class="bi bi-send-fill"></i> Enviar solicitud de reparación';
-      });
-  });
-
-  if (!localStorage.getItem('cookiesOk')) {
-    document.getElementById('cookieBanner').style.display = 'block';
-  }
+  if (!localStorage.getItem('cookiesOk')) {{ document.getElementById('cookieBanner').style.display='block'; }}
 </script>
 </body>
 </html>
